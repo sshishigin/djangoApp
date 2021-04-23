@@ -1,0 +1,16 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+    {% if form.errors %}
+        <p> Отстутствует учетная запись с таким сочетанием логина и пароля </p>
+    {% endif %}
+
+    <form method="POST" action="{% url 'users:register' %}">
+        {%csrf_token%}
+        {{form.as_p}}
+        <button name='submit'> Регистрироваться </button>
+        <input type='hidden' name='next'
+            value="{% url 'shop:index' %}" />
+    </form>
+
+{% endblock content %}

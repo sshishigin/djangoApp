@@ -1,0 +1,29 @@
+{% extends 'shop/base.html' %}
+{% block title %}
+    <title> {{item.title}}</title>
+{% endblock title %}
+
+
+{% block content %}
+
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{item.title}}</h5>
+            <img src="{{item.pic}}" width="300"  alt='Картинка не найдена'>
+            <p class="card-text"> {{item.description}}
+                <h2> {{item.price}} <strong>рублей</strong></h2>
+            </p>
+        </div>
+        
+    </div>
+</div>
+<p class="price">${{ item.price }}</p>
+<form action="{% url 'cart:cart_add' item.id %}" method="post">
+    {{ cart_product_form }}
+    {% csrf_token %}
+    <input type="submit" value="В корзину">
+</form>
+
+{% endblock content %}
+
