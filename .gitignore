@@ -565,3 +565,13 @@ env/share/python-wheels/six-1.14.0-py2.py3-none-any.whl
 env/share/python-wheels/urllib3-1.25.8-py2.py3-none-any.whl
 env/share/python-wheels/webencodings-0.5.1-py2.py3-none-any.whl
 env/share/python-wheels/wheel-0.34.2-py2.py3-none-any.whl
+users/__pycache__/models.cpython-38.pyc
+djangoApp/__pycache__/urls.cpython-38.pyc
+djangoApp/__pycache__/urls.cpython-38.pyc
+orders/__pycache__/admin.cpython-38.pyc
+orders/__pycache__/forms.cpython-38.pyc
+orders/__pycache__/models.cpython-38.pyc
+orders/__pycache__/urls.cpython-38.pyc
+orders/__pycache__/views.cpython-38.pyc
+orders/migrations/0002_order_user.py
+orders/migrations/__pycache__/0002_order_user.cpython-38.pyc
