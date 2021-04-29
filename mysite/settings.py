@@ -134,6 +134,10 @@ AUTH_USER_MODEL = 'users.CustomUser'
 
 CART_SESSION_ID = 'cart'
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
 # Email backend
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
