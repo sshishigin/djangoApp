@@ -575,6 +575,7 @@ orders/__pycache__/urls.cpython-38.pyc
 orders/__pycache__/views.cpython-38.pyc
 orders/migrations/0002_order_user.py
 orders/migrations/__pycache__/0002_order_user.cpython-38.pyc
+<<<<<<< HEAD
 node_modules/.bin/acorn
 node_modules/.bin/browserslist
 node_modules/.bin/envinfo
@@ -3799,3 +3800,5 @@ env/lib/python3.8/site-packages/rest_framework/utils/__pycache__/model_meta.cpyt
 env/lib/python3.8/site-packages/rest_framework/utils/__pycache__/representation.cpython-38.pyc
 env/lib/python3.8/site-packages/rest_framework/utils/__pycache__/serializer_helpers.cpython-38.pyc
 env/lib/python3.8/site-packages/rest_framework/utils/__pycache__/urls.cpython-38.pyc
+=======
+>>>>>>> parent of ce7727d... added webpack
