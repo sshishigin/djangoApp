@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'users',
     'shop',
     'cart',
-    'orders'
+    'orders',
+    
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -145,3 +147,14 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'sshishigin190101@gmail.com'
 EMAIL_HOST_PASSWORD = 'efomef6256A'
+
+# REST SETTINGS
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    ),
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework.parsers.JSONParser',
+    )
+}

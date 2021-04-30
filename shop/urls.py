@@ -7,4 +7,5 @@ app_name = 'shop'
 urlpatterns = [
     path('', views.index, name='index'),
     path('pruduct/<int:id>', views.item_page, name='item_page'),
+    path('new', views.index_w_api),
 ]

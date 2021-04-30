@@ -1,0 +1,89 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}
+<title>Главная страница</title>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.js"></script>
+{% endblock title %}
+
+{% block content %}
+{% if user.is_superuser %}
+  <nav class='navbar navbar-expand-lg'> 
+    <div class="alert alert-success" role="alert">
+    You are in administation mode , here are the
+    <a href="/admin/">admin pages</a> for changing content.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  </nav>
+{% endif %}
+<main class='container'>
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+      <h1 class="display-4">Pricing</h1>
+      <p class="lead">Главная страница</p>
+    </div>
+{% verbatim  %}
+
+    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center" id="index_w_api">
+
+          <div class="card mb-4 shadow-sm" v-for="item in items">
+            <div class="card-header">
+              <a class="link-dark" style='text-decoration: none;'>
+                <h4 class="my-0 fw-normal">{{item.title}}</h4>
+              </a>
+            </div>
+            <div class="card-body">
+              <div class="container">
+                <a >
+                  <img  src="{{item.pic}}" width="200"  alt='Картинка не найдена'>
+                </a>
+            </div>
+              <h1 class="card-title pricing-card-title">{{item.price}} <small class="text-muted">₽</small></h1>
+            </div>
+
+    </div>
+
+{% endverbatim  %}
+
+
+</main> 
+
+<script src = "/static/app.js"></script>
+{% endblock content %}
+
+
+
+
+
+
+<div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+      {% for item in items %}
+        <div class="col">
+          <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+              <a class="link-dark" href='{{item.get_absolute_url}}' style='text-decoration: none;'>
+                <h4 class="my-0 fw-normal">{{item.title}}</h4>
+              </a>
+            </div>
+            <div class="card-body">
+              <div class="container">
+                <a href='{{item.get_absolute_url}}'>
+                  <img  src="{{item.pic}}" width="200"  alt='Картинка не найдена'>
+                </a>
+            </div>
+              <h1 class="card-title pricing-card-title">{{item.price}} <small class="text-muted">₽</small></h1>
+              {% if item.str_id in cart.cart %}
+                <a href="{% url 'cart:cart_detail' %}">
+                  <button type="button" class="w-100 btn btn-lg btn-outline-primary"> Товар уже в корзине</button>
+                </a>
+              {% else %}
+                <a href="{% url 'cart:cart_buy' item.str_id %}">
+                  <button type="button" class="w-100 btn btn-lg btn-primary"> Купить </button>
+                </a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <h1>Нет доступных товаров</h1>
+        {% endfor %}
+    </div>
