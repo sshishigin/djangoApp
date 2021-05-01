@@ -1,8 +1,8 @@
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import HyperlinkedModelSerializer
 from shop.models import Item
 
 
-class IndexSerializer(ModelSerializer):
+class ItemsSerializer(HyperlinkedModelSerializer):
     class Meta:
         model = Item
-        fields = ['title', 'price', 'description', 'pic']
+        fields = ['id', 'title', 'price', 'description', 'pic', 'available']

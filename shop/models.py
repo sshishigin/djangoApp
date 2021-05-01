@@ -24,11 +24,11 @@ class Item(models.Model):
     ###########  Товары   ##############
     category = models.ForeignKey(Category, on_delete=models.SET_DEFAULT, default='1')
     title = models.CharField(max_length=100)
-    price =  models.BigIntegerField()
+    price = models.BigIntegerField()
     retail_price = models.BigIntegerField(default=999999)
     description = models.TextField(max_length=10000)
     pic = models.CharField(max_length=100, default='https://i.ytimg.com/vi/83aci6jpngM/maxresdefault.jpg')
-    available = models.BooleanField(default=True)
+    available = models.BooleanField(default=False)
 
     def str_id(self):
         return str(self.id)

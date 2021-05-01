@@ -1,6 +1,8 @@
 from django.db import models
 from shop.models import Item
 from users.models import CustomUser
+
+
 class Order(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
@@ -21,6 +23,7 @@ class Order(models.Model):
     def __iter__(self):
         for item in self.items.all():
             yield item
+
     def __str__(self):
         return 'Order {}'.format(self.id)
 
@@ -33,6 +36,7 @@ class OrderItem(models.Model):
     product = models.ForeignKey(Item, related_name='order_items',on_delete=models.PROTECT)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.PositiveIntegerField(default=1)
+
     def __str__(self):
         return self.product.title
 
