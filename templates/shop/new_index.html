@@ -5,15 +5,6 @@
 {% endblock title %}
 
 {% block content %}
-{% if user.is_superuser %}
-  <nav class='navbar navbar-expand-lg'> 
-    <div class="alert alert-success" role="alert">
-    You are in administation mode , here are the
-    <a href="/admin/">admin pages</a> for changing content.
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-  </nav>
-{% endif %}
 <main class='container'>
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
       <h1 class="display-4">Pricing</h1>
@@ -28,12 +19,12 @@
               </a>
             </div>
             <div class="card-body">
-                <a >
+                <a v-bind:href="'product/'+item.id">
                   <img  v-bind:src="item.pic" width="200"  alt='Картинка не найдена'>
                 </a>
             </div>
               <h1 class="card-title pricing-card-title"> {{ item.price }} <small class="text-muted">₽</small></h1>
-            <div v-on:click="add(item.id)"> {{item.id}} asasd </div>
+                  <button type="button" class="w-100 btn btn-lg btn-primary" v-on:click="addToCart(item.id)" > Добавить в корзину </button>
     </div>
 
 {% endverbatim  %}

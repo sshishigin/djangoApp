@@ -32,11 +32,16 @@ class Item(models.Model):
 
     def str_id(self):
         return str(self.id)
+
     class Meta:
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
+
     def __str__(self):
         return str(self.id)+':' + self.title
 
     def get_absolute_url(self):
         return reverse('shop:item_page', args=[self.id])
+
+    def to_dict(self):
+        return {'id': self.id, 'title': self.title, 'price': self.price, 'pic': self.pic}

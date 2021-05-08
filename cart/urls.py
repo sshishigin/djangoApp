@@ -1,13 +1,19 @@
-from django.urls import path
-from cart import views
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 
+from cart import views
+from cart.views import CartViewSet
+
+router = DefaultRouter()
+router.register('api/', CartViewSet, basename='cart-api')
 app_name = 'cart'
 
 urlpatterns = [
     path('', views.cart_detail, name='cart_detail'),
-    path('add/<int:item_id>/', views.cart_add, name='cart_add'),
-    path('remove/<int:item_id>/', views.cart_remove, name='cart_remove'),
-    path('buy/<int:item_id>/', views.cart_buy, name='cart_buy'),
-    path('clear/', views.cart_manual_clear, name='clear')
-    # path('update/<int:item_id>/', views.cart_update_quantity, name='cart_update_quantity'),
+    path('add/', views.cart_add, name='cart_add'),
+    # path('api/', CartViewSet.as_view()),
+    path('remove/', views.cart_remove, name='cart_remove'),
+    path('clear/', views.cart_manual_clear, name='clear'),
 ]
+urlpatterns += router.urls
+print(router.urls)

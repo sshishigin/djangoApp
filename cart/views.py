@@ -1,74 +1,66 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .serializers import CartSerializer
 from shop.models import Item
-from .forms import CartAddProductForm
-
-
 from .models import Cart
 
 
 class CartViewSet(APIView):
-    serializer_class = CartSerializer
-
     def get(self, request, format=None):
-        cart = Cart(request)
-        return Response(cart)
+        return Response(Cart(request))
 
+    def put(self, request, pk, format=None):
+        ...
+        item_id = request.data['item_id']
+        quantity = request.data['quantity']
+        try:
+            Cart(request).add(
+                item=get_object_or_404(pk),
+                quantity=quantity,
+                update_quantity=True
+            )
+        except error:
+            Cart(request).add(
+                item=get_object_or_404(item_id),
+                quantity=quantity,
+                update_quantity=True
+            )
+        return Response('all good')
 
-@api_view()
+    @classmethod
+    def get_extra_actions(cls):
+        return []
 def cart_detail(request):
-    cart = Cart(request)
-    cart_product_form = CartAddProductForm()
-    return render(request, 'cart/detail.html', {'cart': cart,
-                                                'cart_product_form': cart_product_form})
+    return render(request, 'cart/newDetail.html')
 
 
 @api_view(['POST'])
-def cart_add(request, item_id):
-    cart = Cart(request)
-    item = get_object_or_404(Item, id=item_id)
-    print(request.data)
-    form = CartAddProductForm(request.POST)
-    if form.is_valid():
-        cd = form.cleaned_data
-        print("here", cd)
-        cart.add(item=item,
-                 quantity=cd['quantity'],
-                 update_quantity=cd['update'])
-    else:
-        try:
-            cart.add(
-                item=item,
-                quantity=request.data['data']['quantity'],
-                update_quantity = True
-            )
-        except:
-            print('Ну пиздец')
-    return redirect('cart:cart_detail')
+def cart_add(request):
+    item_id = request.data['data']['item_id']
+    quantity = request.data['data']['quantity']
+    try:
+        Cart(request).add(
+            item=get_object_or_404(Item, id=item_id),
+            quantity= quantity,
+            update_quantity=True
+        )
+    except error:
+        print(error)
+        return Response(status=500)
+    return Response(status=200)
 
 
-@api_view()
-def cart_buy(request, item_id):
-    cart = Cart(request)
-    product = get_object_or_404(Item, id=item_id)
-    cart.add(item=product)
-    return redirect('cart:cart_detail')
+@api_view(['POST'])
+def cart_remove(request):
+    item_id = request.data['data']['item_id']
+    print(item_id, "УДАЛЯЕТСЯ ИЗ КОРЗИНЫ")
+    Cart(request).remove(get_object_or_404(Item, id=item_id))
+    return Response(status=200)
 
 
-@api_view()
-def cart_remove(request, item_id):
-    cart = Cart(request)
-    product = get_object_or_404(Item, id=item_id)
-    cart.remove(product)
-    return redirect('cart:cart_detail')
-
-
-@api_view()
+@api_view(['POST'])
 def cart_manual_clear(request):
-    cart = Cart(request)
-    cart.clear()
-    return redirect('cart:cart_detail')
+    Cart(request).clear()
+    return Response(status=200)

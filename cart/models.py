@@ -41,9 +41,8 @@ class Cart(object):
         # получение объектов product и добавление их в корзину
         items = Item.objects.filter(id__in=item_ids)
         for item in items:
-            self.cart[str(item.id)]['item'] = item
+            self.cart[str(item.id)].update(item.to_dict())  # serialize here
         for id_, item in self.cart.items():
-            item['price'] = Decimal(item['price'])
             item['total_price'] = item['price'] * item['quantity']
             yield item
 

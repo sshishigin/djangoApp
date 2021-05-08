@@ -1,24 +1,24 @@
-window.csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 const app = Vue.createApp({
     data() {
         return {
             items: null,
-            cart : 0
+            cart_quantity : 0
         }
     },
     methods: {
-        addToCart() {
-            this.cart += 1
-        },
-        add(id) {
-            axios.defaults.xsrfHeaderName = "X-CSRFToken";
-            axios.post('/cart/add/' + id + '/',{_token:csrfToken, data:{quantity:1}})
+        addToCart(id) {
+            axios.post('cart/add/', {_token:csrfToken, data:{quantity:1, item_id:id}});
         }
     },
     mounted() {
         axios.get('/api/items/')
-        .then(meta => { console.log(meta.data);
-                  this.items = meta.data
-                })
+        .then(meta => {
+                    console.log(meta.data);
+                    this.items = meta.data;
+                });
+        axios.get('/cart/api')
+        .then(meta => {
+            this.cart_quantity=meta.data.length
+        })
     },
 })
