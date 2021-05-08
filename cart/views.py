@@ -9,31 +9,11 @@ from .models import Cart
 
 class CartViewSet(APIView):
     def get(self, request, format=None):
-        return Response(Cart(request))
+        return Response(Cart(request), status=200)
 
-    def put(self, request, pk, format=None):
-        ...
-        item_id = request.data['item_id']
-        quantity = request.data['quantity']
-        try:
-            Cart(request).add(
-                item=get_object_or_404(pk),
-                quantity=quantity,
-                update_quantity=True
-            )
-        except error:
-            Cart(request).add(
-                item=get_object_or_404(item_id),
-                quantity=quantity,
-                update_quantity=True
-            )
-        return Response('all good')
 
-    @classmethod
-    def get_extra_actions(cls):
-        return []
 def cart_detail(request):
-    return render(request, 'cart/newDetail.html')
+    return render(request, 'cart/cartDetail.html')
 
 
 @api_view(['POST'])

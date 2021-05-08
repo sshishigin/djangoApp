@@ -11,11 +11,11 @@ from shop.serializers import ItemsSerializer
 
 # Create your views here.
 def index(request):
-    return render(request, 'shop/new_index.html')
+    return render(request, 'shop/index.html')
 
 
 def item_page(request, item_id):
-    return render(request, 'shop/new_item_page.html', {'item_id': item_id})
+    return render(request, 'shop/item_page.html', {'item_id': item_id})
 
 
 class ItemsViewSet(ModelViewSet):
