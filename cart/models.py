@@ -36,12 +36,10 @@ class Cart(object):
             self.save()
 
     def __iter__(self):
-        # Перебор элементов в корзине и получение продуктов из базы данных
-        item_ids = self.cart.keys()
-        # получение объектов product и добавление их в корзину
-        items = Item.objects.filter(id__in=item_ids)
+        # получение объектов Item и добавление их в корзину
+        items = Item.objects.filter(id__in=self.cart.keys())
         for item in items:
-            self.cart[str(item.id)].update(item.to_dict())  # serialize here
+            self.cart[str(item.id)].update(item.to_dict())  # здесь каждый айтем сериализуется в словарь
         for id_, item in self.cart.items():
             item['total_price'] = item['price'] * item['quantity']
             yield item

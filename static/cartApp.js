@@ -10,8 +10,7 @@ const app = Vue.createApp({
             axios.post('clear/', {_token:csrfToken})
         },
         remove(id) {
-            axios.post('remove/',
-            {_token:csrfToken, data:{item_id:id}});
+            axios.post('remove/', {item_id:id});
             this.items[id]['removed'] = true;
         }
     },

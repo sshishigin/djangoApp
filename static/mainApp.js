@@ -7,7 +7,7 @@ const app = Vue.createApp({
     },
     methods: {
         addToCart(id) {
-            axios.post('cart/add/', {_token:csrfToken, data:{quantity:1, item_id:id}});
+            axios.post('cart/add/', {quantity:1, item_id:id});
         }
     },
     mounted() {
@@ -19,6 +19,6 @@ const app = Vue.createApp({
         axios.get('/cart/api')
         .then(meta => {
             this.cart_quantity=meta.data.length
-        })
+        });
     },
 })

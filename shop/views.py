@@ -5,11 +5,9 @@ from rest_framework.viewsets import ModelViewSet
 from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import Item
-from cart.forms import CartAddProductForm
 from shop.serializers import ItemsSerializer
 
 
-# Create your views here.
 def index(request):
     return render(request, 'shop/index.html')
 
@@ -26,4 +24,3 @@ class ItemsViewSet(ModelViewSet):
     filter_fields = ['id', 'price', 'available']
     search_fields = ['title']
     ordering_fields = ['price']
-
