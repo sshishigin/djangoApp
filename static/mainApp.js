@@ -7,7 +7,7 @@ const app = Vue.createApp({
     },
     methods: {
         addToCart(id) {
-            axios.post('cart/add/', {quantity:1, item_id:id});
+            axios.put('/cart/api/', {quantity:1, item_id:id});
         }
     },
     mounted() {

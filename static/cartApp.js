@@ -7,10 +7,10 @@ const app = Vue.createApp({
     },
     methods: {
         cleanCart() {
-            axios.post('clear/', {_token:csrfToken})
+            axios.patch('/cart/api/', {clearCart: true})
         },
         remove(id) {
-            axios.post('remove/', {item_id:id});
+            axios.patch('/cart/api/', {item_id:id, 'clearCart': false});
             this.items[id]['removed'] = true;
         }
     },
