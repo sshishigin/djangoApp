@@ -1,3 +1,5 @@
+from json import JSONEncoder
+
 from django.db import models
 from shop.models import Item
 from users.models import CustomUser
@@ -22,7 +24,7 @@ class Order(models.Model):
 
     def __iter__(self):
         for item in self.items.all():
-            yield item
+            yield {item}
 
     def __str__(self):
         return 'Order {}'.format(self.id)

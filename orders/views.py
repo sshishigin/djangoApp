@@ -1,39 +1,42 @@
-from django.shortcuts import render
-from .models import OrderItem
-from .forms import OrderCreateForm
-from cart.models import Cart
-# from users.models import User
-from django.core.mail import send_mail
-from django.conf import settings
+from django.shortcuts import get_object_or_404
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
-# Create your views here.
-def order_create(request):
-    cart = Cart(request)
-    if cart:
-        if request.method == 'POST':
-            form = OrderCreateForm(request.POST)
-            if form.is_valid():
-                order = form.save()
-                order.user = request.user
-                for item in cart:
-                    OrderItem.objects.create(order=order,
-                                            product=item['item'],
-                                            price=item['price'],
-                                            quantity=item['quantity'])
-                # очистка корзины
-                cart.clear()
-                send_mail(
-                "Подтверждение заказа" , #Тема
-                "{name},ваш заказ номер {id} находится в обработке".format(name=order.first_name, id=order.id), #сообщение
-                settings.EMAIL_HOST_USER , #адресант
-                [order.email], #адресат
-                fail_silently = False
-                )
-                return render(request, 'orders/created.html',
-                            {'order': order})
-        else:
-            form = OrderCreateForm
-        return render(request, 'orders/create.html',
-                    {'cart': cart, 'form': form})
-    else:
-        return render(request, 'shop/index.html')
+from shop.models import Item
+from .models import Order
+from .models import OrderItem
+from cart.models import Cart
+from .serializers import OrderSerializer, OrderPostSerializer, OrderItemSerializer
+
+
+class OrderAPI(APIView):
+    def post(self, request):
+        cart = Cart(request)
+        serializer = OrderPostSerializer()
+        order = serializer.create(validated_data=request.data['order'])
+        if cart:
+            for item in cart:
+                OrderItem.objects.create(order=order,
+                                         product=get_object_or_404(Item, id=item['id']),
+                                         price=item['price'],
+                                         quantity=item['quantity'])
+            cart.clear()
+            return Response(status=200)
+        return Response(status=203)
+
+    def get(self, request, format=None):
+        serializer = OrderSerializer(
+            Order.objects.filter(user=request.user), many=True
+        )
+        return Response(serializer.data)
+
+
+class OrderItemViewSet(APIView):
+    def get(self, request):
+        serializer = OrderItemSerializer(
+            OrderItem.objects.filter(
+                order=get_object_or_404(Order, id=request.data['orderId'])
+            ),
+            many=True
+        )
+        return Response(serializer.data)

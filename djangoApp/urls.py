@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework.routers import SimpleRouter, DefaultRouter
+from rest_framework.routers import DefaultRouter
 
+from orders.views import OrderAPI, OrderItemViewSet
 from shop.views import ItemsViewSet
 from users.views import UsersViewSet
 
@@ -14,7 +15,10 @@ urlpatterns = [
     path('', include('shop.urls', namespace='shop')),
     path('cart/', include('cart.urls', namespace='cart')),
     path('users/', include('users.urls', namespace='users')),
-    path('order/', include('orders.urls', namespace='orders'))
+    path('order/', include('orders.urls', namespace='orders')),
+    path('api/orders/', OrderAPI.as_view(), name='orderAPI'),
+    path('api/orderItems/', OrderItemViewSet.as_view(), name='orderItemsAPI')
+
 ]
 
 urlpatterns += router.urls

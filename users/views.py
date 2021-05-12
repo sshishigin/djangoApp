@@ -44,6 +44,6 @@ class UsersViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = UsersSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    # filter_fields = ['price', 'available']
-    # search_fields = ['title']
-    # ordering_fields = ['price']
+    filter_fields = ['price', 'available']
+    search_fields = ['title']
+    ordering_fields = ['price']

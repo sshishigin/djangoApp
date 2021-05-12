@@ -5,33 +5,22 @@
 {% endblock title %}
 
 {% block content %}
-<main class='container'>
-    <div class='row'>
-        {% for order in orders %}
+{% verbatim %}
+<main class='container' id="orderList">
+    <div class='row' v-for="order in orders" :key="order.id">
             <div class='col-'>
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Заказ номер {{ order.id }}</h5>
-                        <table class='table'>
-                            <tr>
-                                <th> Товар</th>
-                                <th> Цена</th>
-                                <th> Количество</th>
-                            </tr>
-                            {% for item in order %}
-                            <tr>
-                                <td> <strong>{{ item }}</strong> </td>
-                                <td> {{ item.price }} </td>
-                                <td> {{ item.quantity }}</td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                        Сумма {{ order.get_total_cost }} ₽
+                        Сумма {{ order }} ₽
                     </div>
                 </div>
-
             </div>
-        {% endfor %}
     </div>
+{% endverbatim %}
 </main>
+<script src = "/static/userProfileApp.js"></script>
+<script>
+  const mountedApp = orderApp.mount("#orderList")
+</script>
 {% endblock %}
