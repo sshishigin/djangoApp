@@ -1,6 +1,9 @@
 from django.shortcuts import get_object_or_404
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
 
 from shop.models import Item
 from .models import Order
@@ -31,12 +34,9 @@ class OrderAPI(APIView):
         return Response(serializer.data)
 
 
-class OrderItemViewSet(APIView):
-    def put(self, request):
-        serializer = OrderItemSerializer(
-            OrderItem.objects.filter(
-                order=get_object_or_404(Order, id=request.data['orderId'])
-            ),
-            many=True
-        )
-        return Response(serializer.data)
+class OrderItemViewSet(ModelViewSet):
+    serializer_class = OrderItemSerializer
+    queryset = OrderItem.objects.all()
+    permission_classes = [IsAuthenticated]
+    filter_backends = [DjangoFilterBackend]
+    filter_fields = ['order']
