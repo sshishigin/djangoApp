@@ -11,6 +11,14 @@ const orderApp = Vue.createApp({
         .then(meta => {
                     console.log(meta.data);
                     this.orders = meta.data;
+                    for (const order of this.orders){
+                        axios.put('/api/orderItems/', {orderId : order['id']})
+                        .then(
+                            meta => {
+                                order['items'] = meta.data
+                            }
+                        )
+                    }
                 });
     },
 })

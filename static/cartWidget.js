@@ -7,14 +7,13 @@ const cartWidgetApp = Vue.createApp({
     },
     methods: {
         cartDetail(){
-            axios.get('/cart')
+            axios.get('/api/cart/')
         }
     },
     mounted() {
-        axios.get('/cart/api')
+        axios.get('/api/cart/')
         .then(meta => {
             this.cart_quantity=meta.data.length;
-            console.log(meta.data)
         })
     },
 })

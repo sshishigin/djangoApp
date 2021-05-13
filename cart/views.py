@@ -1,5 +1,4 @@
 from django.shortcuts import render, get_object_or_404
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -7,7 +6,7 @@ from shop.models import Item
 from .models import Cart
 
 
-class CartViewSet(APIView):
+class CartAPI(APIView):
     def get(self, request, format=None):
         return Response(Cart(request), status=200)
 
@@ -31,8 +30,6 @@ class CartViewSet(APIView):
             return Response(status=200)
         else:
             return Response('Bad request', status=203)
-
-
 
 
 def cart_detail(request):

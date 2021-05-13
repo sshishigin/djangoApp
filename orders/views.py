@@ -32,7 +32,7 @@ class OrderAPI(APIView):
 
 
 class OrderItemViewSet(APIView):
-    def get(self, request):
+    def put(self, request):
         serializer = OrderItemSerializer(
             OrderItem.objects.filter(
                 order=get_object_or_404(Order, id=request.data['orderId'])

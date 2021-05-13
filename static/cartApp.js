@@ -1,26 +1,24 @@
 const app = Vue.createApp({
     data() {
         return {
-        cart_total_quantity : 0,
         items : null
         }
     },
     methods: {
         cleanCart() {
-            axios.patch('/cart/api/', {clearCart: true})
+            axios.patch('/api/cart/', {clearCart: true})
         },
         remove(id) {
-            axios.patch('/cart/api/', {item_id:id, 'clearCart': false});
+            axios.patch('/api/cart/', {item_id:id, 'clearCart': false});
             this.items[id]['removed'] = true;
         }
     },
     mounted() {
-        axios.get('/cart/api')
+        axios.get('/api/cart/')
         .then(meta => {
             this.items = meta.data;
             for (i = 0; i < this.items.length; i++) {
                 this.items[i]['removed'] = false;
-                console.log(this.items[i]);
             }
         })
     },
