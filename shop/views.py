@@ -18,9 +18,8 @@ def item_page(request, item_id):
 
 class ItemsViewSet(ModelViewSet):
     queryset = Item.objects.all()
-    permission_classes = [IsAuthenticated]
     serializer_class = ItemsSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filter_fields = ['id', 'price', 'available']
-    search_fields = ['title']
+    search_fields = ['title', 'description']
     ordering_fields = ['price']

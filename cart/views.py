@@ -7,6 +7,7 @@ from .models import Cart
 
 
 class CartAPI(APIView):
+
     def get(self, request, format=None):
         return Response(Cart(request), status=200)
 

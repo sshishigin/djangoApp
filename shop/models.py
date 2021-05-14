@@ -23,7 +23,7 @@ class Category(models.Model):
 class Item(models.Model):
     category = models.ForeignKey(Category, on_delete=models.SET_DEFAULT, default='1')
     title = models.CharField(max_length=100)
-    price = models.BigIntegerField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     retail_price = models.BigIntegerField(default=999999)
     description = models.TextField(max_length=10000)
     pic = models.CharField(max_length=100, default='https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.dribbble.com%2Fusers%2F448879%2Fscreenshots%2F2487655%2Faguacate.jpg&f=1&nofb=1')

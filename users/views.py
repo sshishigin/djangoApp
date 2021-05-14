@@ -2,15 +2,12 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.viewsets import ModelViewSet
 
-from shop.models import Item
 from .models import CustomUser
 from .forms import CustomUserCreationForm
 from orders.models import Order
-
-# Create your views here.
 from .serializers import UsersSerializer
 
 
@@ -41,9 +38,7 @@ def logout_(request):
 
 class UsersViewSet(ModelViewSet):
     queryset = CustomUser.objects.all()
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAdminUser]
     serializer_class = UsersSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filter_fields = ['price', 'available']
-    search_fields = ['title']
-    ordering_fields = ['price']
+
