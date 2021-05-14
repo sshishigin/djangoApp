@@ -13,6 +13,7 @@ from .serializers import OrderSerializer, OrderPostSerializer, OrderItemSerializ
 
 
 class OrderAPI(APIView):
+    permission_classes = [IsAuthenticated]
     def post(self, request):
         cart = Cart(request)
         serializer = OrderPostSerializer()
