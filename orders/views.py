@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -14,6 +14,7 @@ from .serializers import OrderSerializer, OrderPostSerializer, OrderItemSerializ
 
 class OrderAPI(APIView):
     permission_classes = [IsAuthenticated]
+
     def post(self, request):
         cart = Cart(request)
         serializer = OrderPostSerializer()
@@ -41,3 +42,7 @@ class OrderItemViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
     filter_backends = [DjangoFilterBackend]
     filter_fields = ['order']
+
+
+def make_order_view(request):
+    return render(request, 'orders/create.html')

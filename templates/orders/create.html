@@ -3,9 +3,7 @@
 {% block title %} <title>Оформление заказа</title> {% endblock %}
 
 {% block content %}
-<form action="{% url 'orders:order_create' %}" method="post">
-{% csrf_token %}
-{{ form.as_p }}
+<form action="" method="post">
 <button name='submit'> Submit  </button>
 </form>
 {% endblock %}
