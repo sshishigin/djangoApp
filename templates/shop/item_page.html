@@ -1,13 +1,11 @@
 {% extends 'shop/base.html' %}
+
 {% block title %}
     <title> {{item.title}}</title>
 {% endblock title %}
 
-
 {% block content %}
-
 {% verbatim %}
-
 <div class="container" id="item_on_page">
     <div class="card">
         <div class="card-body">
@@ -15,19 +13,17 @@
             <img v-bind:src="item.pic" width="300"  alt='Картинка не найдена'>
             <p class="card-text">
                 {{ item.description }}
-                <h2> {{ item.price }}<strong>рублей</strong></h2>
+                <h2> {{ item.price }} <strong>рублей</strong></h2>
             </p>
         </div>
-
     </div>
 </div>
 {% endverbatim %}
-<script src="/static/itemPageApp.js"></script>
 
+<script src="/static/itemPageApp.js"></script>
 <script>
   const item_id = {{item_id}}
   const mountedItemPageApp = itemPageApp.mount("#item_on_page")
-
 </script>
 {% endblock content %}
 
