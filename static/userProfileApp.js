@@ -1,10 +1,27 @@
 const orderApp = Vue.createApp({
     data() {
         return {
-            orders: []
+            orders: [],
+            meta: {}
         }
     },
     methods: {
+        addOrderId(id) {
+            if (id in this.meta && this.meta[id] != undefined) {
+                delete this.meta[id]
+            } else {
+                this.meta[id] = undefined
+            }
+        },
+        getItems(id) {
+            if (this.meta[id] === undefined){
+                axios.get('/api/orderItems/', {params:{"order":id}})
+                    .then(
+                        meta => {this.meta[id] = meta}
+                    )
+                }
+            return this.meta[id].data
+        }
     },
     mounted() {
         axios.get('/api/orders/')

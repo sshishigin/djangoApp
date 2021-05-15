@@ -13,6 +13,9 @@
                     <div class="card-body">
                         <h5 class="card-title">Заказ номер {{ order.id }}</h5>
                         Товары в заказе: {{ order.items }}
+                        <br>
+                        <button type="button" class="btn btn-outline-primary" @click='addOrderId(order.id)'>Отобразить товары в заказе</button>
+                        <p v-if='order.id in meta'>{{ getItems(order.id) }}</p>
                     </div>
                 </div>
             </div>
