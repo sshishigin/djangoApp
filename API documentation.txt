@@ -2,9 +2,9 @@ Cart:
     URL: 'api/cart',
     methods:
         get: no body required, returns serialized Cart object;
-        post: body required {'itemId' : 4, 'quantity' : 5};
-        delete: body required {'itemIdList' : [4,5]};
-        patch: body required {'itemId':23, 'quantity':2};
+        post: body required {'itemId' : 4, 'quantity' : 5}, for adding Item to cart;
+        delete: body required {'itemIdList' : [4,5]}, for deleting item from cart;
+        patch: body required {'itemId':23, 'quantity':2}, for changing quantity;
 
 Order:
     URL: 'api/order',
@@ -12,6 +12,13 @@ Order:
         get: no body required, returns serialized Order object;
         post: body required {'first_name':'Egor', 'last_name':'Belyakov', 'email':'belyakov@mail.ru', 'address':'bla bla', 'postal_code': 123123, 'city':'Vologda'};
 
-    OrderItems:
+    OrderItems: soon
+
+Like:
+    URL: 'api/like'
+    methods:
+        get: no body required, return list of liked items for User;
+        post: body required {"itemId":3}, likes Item;
+        delete: body required {"itemId":3}, for deleting Like;
 
 Я пока не могу избавиться от asda_adasd_adsads переменных из-за определенного функционала который завязан на автоматической обработке запроса но я попытаюсь узнать как можно изменить

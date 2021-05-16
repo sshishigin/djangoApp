@@ -1,5 +1,7 @@
 from django.db import models
 
+from users.models import CustomUser
+
 
 class Category(models.Model):
     company = models.CharField(max_length=15)
@@ -37,3 +39,8 @@ class Item(models.Model):
 
     def to_dict(self):
         return {'id': self.id, 'title': self.title, 'price': self.price, 'pic': self.pic}
+
+
+class Like(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.SET_DEFAULT, default=None)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, default=None)
