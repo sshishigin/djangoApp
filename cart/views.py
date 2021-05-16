@@ -11,7 +11,7 @@ class CartAPI(APIView):
     def get(self, request, format=None):
         return Response(Cart(request), status=200)
 
-    def put(self, request):
+    def post(self, request):
         item_id = request.data['item_id']
         quantity = request.data['quantity']
         Cart(request).add(
