@@ -24,7 +24,7 @@ const orderApp = Vue.createApp({
         }
     },
     mounted() {
-        axios.get('/api/orders/')
+        axios.get('/api/order/')
         .then(meta => {
                     console.log(meta.data);
                     this.orders = meta.data;

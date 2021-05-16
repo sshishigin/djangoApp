@@ -19,7 +19,8 @@ const app = Vue.createApp({
             this.items = meta.data;
             for (i = 0; i < this.items.length; i++) {
                 this.items[i]['removed'] = false;
-            }
+            };
+            console.log(this.items)
         })
     },
 })

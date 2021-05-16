@@ -16,7 +16,6 @@ class CartAPI(APIView):
             Cart(request).add(
                 item=get_object_or_404(Item, id=request.data['itemId']),
                 quantity=request.data['quantity'],
-                update_quantity=True
             )
             return Response(status=202)
         except KeyError:
