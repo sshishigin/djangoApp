@@ -1,7 +1,8 @@
 const itemPageApp = Vue.createApp({
     data() {
         return {
-            item : {}
+            item : {},
+            blabla : {'hui':2},
         }
     },
     methods: {

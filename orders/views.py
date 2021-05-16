@@ -29,7 +29,7 @@ class OrderAPI(APIView):
             return Response(status=200)
         return Response(status=203)
 
-    def get(self, request, format=None):
+    def get(self, request):
         serializer = OrderSerializer(
             Order.objects.filter(user=request.user), many=True
         )

@@ -12,15 +12,15 @@ class Cart(object):
             cart = self.session[settings.CART_SESSION_ID] = {}
         self.cart = cart
 
-    def add(self, item, quantity=1, update_quantity=False):
+    def add(self, item, quantity=1):
         if item.id not in self.cart:
-            self.cart[item.id] = {'quantity': 0,
+            self.cart[item.id] = {'quantity': quantity,
                                   'price': item.price}
-        if update_quantity:
+            self.save()
+
+    def updateItemQuantity(self, item, quantity):
+        if item.id in self.cart:
             self.cart[item.id]['quantity'] = quantity
-        else:
-            self.cart[item.id]['quantity'] += quantity
-        self.save()
 
     def save(self):
         # Обновление сессии cart
@@ -47,11 +47,6 @@ class Cart(object):
     def __len__(self):
         # Подсчет всех товаров в корзине.
         return sum(item['quantity'] for item in self.cart.values())
-
-    def get_total_price(self):
-        # Подсчет стоимости товаров в корзине.
-        return sum(Decimal(item['price']) * item['quantity'] for item in
-                   self.cart.values())
 
     def clear(self):
         # удаление корзины из сессии

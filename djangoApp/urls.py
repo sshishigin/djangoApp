@@ -15,7 +15,7 @@ router.register('api/orderItems', OrderItemViewSet)
 extra_router = DefaultRouterWithSimpleViews()
 
 extra_router.register('api/cart', CartAPI, 'cartAPI')
-extra_router.register('api/orders', OrderAPI, 'orderAPI')
+extra_router.register('api/order', OrderAPI, 'orderAPI')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
