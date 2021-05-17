@@ -26,6 +26,7 @@ class Item(models.Model):
     description = models.TextField(max_length=10000)
     pic = models.CharField(max_length=100, default='https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.dribbble.com%2Fusers%2F448879%2Fscreenshots%2F2487655%2Faguacate.jpg&f=1&nofb=1')
     available = models.BooleanField(default=False)
+    users = models.ManyToManyField(CustomUser, through='UserItemRelation')
 
     def str_id(self):
         return str(self.id)
@@ -41,6 +42,7 @@ class Item(models.Model):
         return {'id': self.id, 'title': self.title, 'price': self.price, 'pic': self.pic}
 
 
-class Like(models.Model):
+class UserItemRelation(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.SET_DEFAULT, default=None)
     item = models.ForeignKey(Item, on_delete=models.CASCADE, default=None)
+    like = models.BooleanField(default=False)
