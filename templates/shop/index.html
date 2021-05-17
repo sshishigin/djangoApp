@@ -25,6 +25,7 @@
         </div>
         <h1 class="card-title pricing-card-title"> {{ item.price }} <small class="text-muted">₽</small></h1>
         <button type="button" class="w-100 btn btn-lg btn-primary" v-on:click="addToCart(item.id)" > Добавить в корзину </button>
+        <button type="button" class="w-50 btn btn-lg btn-warning mb-3" v-on:click="like(item.id)" > Лайк </button>
         </div>
     </div>
     {% endverbatim  %}

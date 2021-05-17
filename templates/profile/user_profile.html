@@ -8,7 +8,7 @@
 {% verbatim %}
 <main class='container' id="orderList">
     <div class='row' v-for="order in orders" :key="order.id">
-            <div class='col-'>
+            <div class='col'>
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Заказ номер {{ order.id }}</h5>
@@ -19,6 +19,18 @@
                     </div>
                 </div>
             </div>
+    </div>
+    <h1> лайки :</h1>
+    <div class="row" v-for="item in likedItems" :key="item.id">
+        <div class='col'>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">title: {{ item.title }}</h5>
+                    <h5> Цена : {{ item.price }} </h5>
+                    <button class="w-50 btn btn-lg btn-danger mb-3" @click="removeLike(item.id)"> Дизлааайк  </button>
+                </div>
+            </div>
+        </div>
     </div>
 {% endverbatim %}
 </main>
