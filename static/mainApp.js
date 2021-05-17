@@ -7,7 +7,11 @@ const app = Vue.createApp({
     methods: {
         addToCart(id) {
             axios.post('/api/cart/', {quantity:1, itemId:id});
+        },
+        like(id) {
+            axios.post('/api/like/', {itemId:id})
         }
+
     },
     mounted() {
         axios.get('/api/items/')

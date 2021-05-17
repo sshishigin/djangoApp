@@ -36,11 +36,11 @@ class LikeAPI(APIView):
         return Response(data=serializer.data)
 
     def post(self, request):
-        like = Like(user=request.user, item=get_object_or_404(Item, id=request.data['itemId']))
+        like = Like.objects.get_or_create(user=request.user, item=get_object_or_404(Item, id=request.data['itemId']))
         like.save()
         return Response('Liked', status=200)
 
-    def delete(self, request):
+    def patch(self, request):
         like = Like.objects.get(user=request.user, item=get_object_or_404(Item, id=request.data['itemId']))
         like.delete()
         return Response('Like deleted', status=200)
