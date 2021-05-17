@@ -25,7 +25,7 @@ const orderApp = Vue.createApp({
         },
         removeLike(id){
             console.log(id)
-            axios.patch('/api/like/', {'itemId':id})
+            axios.post('/api/like/', {'itemId':id, like:false})
         }
     },
     mounted() {
