@@ -9,7 +9,7 @@ const app = Vue.createApp({
             axios.post('/api/cart/', {quantity:1, itemId:id});
         },
         like(id) {
-            axios.post('/api/like/', {itemId:id})
+            axios.post('/api/like/', {itemId:id, like:true})
         }
 
     },
