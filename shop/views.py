@@ -1,13 +1,14 @@
 from django.shortcuts import render, get_object_or_404
 from rest_framework.filters import OrderingFilter, SearchFilter
+from rest_framework.mixins import UpdateModelMixin
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from django_filters.rest_framework import DjangoFilterBackend
 
-from users.serializers import LikesSerializer
-from .models import Item, Like
-from shop.serializers import ItemsSerializer
+from .models import Item, UserItemRelation
+from shop.serializers import ItemsSerializer, UserItemRelationSerializer
 
 
 def index(request):
@@ -28,19 +29,17 @@ class ItemsViewSet(ModelViewSet):
 
 
 class LikeAPI(APIView):
+
     def get(self, request):
-        serializer = LikesSerializer(
-            Like.objects.filter(user=request.user),
+        serializer = UserItemRelationSerializer(
+            UserItemRelation.objects.filter(user=request.user),
             many=True
         )
         return Response(data=serializer.data)
 
     def post(self, request):
-        like = Like.objects.get_or_create(user=request.user, item=get_object_or_404(Item, id=request.data['itemId']))
-        like.save()
+        relation, _ = UserItemRelation.objects\
+            .get_or_create(user=request.user, item_id=request.data['itemId'])
+        relation.like=request.data['like']
+        relation.save()
         return Response('Liked', status=200)
-
-    def patch(self, request):
-        like = Like.objects.get(user=request.user, item=get_object_or_404(Item, id=request.data['itemId']))
-        like.delete()
-        return Response('Like deleted', status=200)
