@@ -32,7 +32,7 @@ class LikeAPI(APIView):
 
     def get(self, request):
         serializer = UserItemRelationSerializer(
-            UserItemRelation.objects.filter(user=request.user),
+            UserItemRelation.objects.filter(user=request.user, like=True),
             many=True
         )
         return Response(data=serializer.data)
