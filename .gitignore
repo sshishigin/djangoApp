@@ -3944,3 +3944,4 @@ shop/__pycache__/serializers.cpython-38.pyc
 shop/__pycache__/urls.cpython-38.pyc
 shop/__pycache__/views.cpython-38.pyc
 **/__pycache__
+db.sqlite3
