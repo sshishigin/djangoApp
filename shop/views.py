@@ -1,11 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from rest_framework.filters import OrderingFilter, SearchFilter
+from rest_framework.mixins import UpdateModelMixin
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from django_filters.rest_framework import DjangoFilterBackend
 
-from .models import Item
-from shop.serializers import ItemsSerializer
+from .models import Item, UserItemRelation
+from shop.serializers import ItemsSerializer, UserItemRelationSerializer
 
 
 def index(request):
@@ -23,3 +26,20 @@ class ItemsViewSet(ModelViewSet):
     filter_fields = ['id', 'price', 'available']
     search_fields = ['title', 'description']
     ordering_fields = ['price']
+
+
+class LikeAPI(APIView):
+
+    def get(self, request):
+        serializer = UserItemRelationSerializer(
+            UserItemRelation.objects.filter(user=request.user, like=True),
+            many=True
+        )
+        return Response(data=serializer.data)
+
+    def post(self, request):
+        relation, _ = UserItemRelation.objects\
+            .get_or_create(user=request.user, item_id=request.data['itemId'])
+        relation.like=request.data['like']
+        relation.save()
+        return Response('Liked', status=200)

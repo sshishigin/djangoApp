@@ -2,7 +2,8 @@ const orderApp = Vue.createApp({
     data() {
         return {
             orders: [],
-            meta: {}
+            meta: {},
+            likedItems:[]
         }
     },
     methods: {
@@ -21,21 +22,35 @@ const orderApp = Vue.createApp({
                     )
                 }
             return this.meta[id].data
+        },
+        removeLike(id){
+            console.log(id)
+            axios.patch('/api/like/', {'itemId':id})
         }
     },
     mounted() {
         axios.get('/api/order/')
         .then(meta => {
-                    console.log(meta.data);
-                    this.orders = meta.data;
-                    for (const order of this.orders){
-                        axios.get('/api/orderItems/', {params:{"order":order.id}})
-                        .then(
-                            meta => {
-                                order['items'] = meta.data
-                            }
-                        )
+            this.orders = meta.data;
+            for (const order of this.orders){
+                axios.get('/api/orderItems/', {params:{"order":order.id}})
+                .then(
+                    meta => {
+                        order['items'] = meta.data
                     }
-                });
+                )
+            }
+        });
+        axios.get('/api/like/')
+        .then(meta => {
+            for(const itemId of meta.data){
+                axios.get('/api/items/'+itemId.item)
+                .then(
+                    meta => {
+                        this.likedItems.push(meta.data)
+                    }
+                )
+            }
+        })
     },
 })
