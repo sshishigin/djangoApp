@@ -3,7 +3,7 @@ Cart:
     methods:
         get: no body required, returns serialized Cart object;
         post: body required {'itemId' : 4, 'quantity' : 5}, for adding Item to cart;
-        delete: body required {'itemIdList' : [4,5]}, for deleting item from cart;
+        put: body required {'itemIdList' : [4,5]}, for deleting item from cart;
         patch: body required {'itemId':23, 'quantity':2}, for changing quantity;
 
 Order:
