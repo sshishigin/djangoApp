@@ -3948,4 +3948,4 @@ shop/migrations/0004_alter_item_price.py
 shop/migrations/0005_alter_item_price.py
 shop/migrations/0006_like.py
 shop/migrations/0007_auto_20210517_1147.py
-db.sqlite3
+**/.sqlite3
