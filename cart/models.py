@@ -1,4 +1,3 @@
-from decimal import Decimal
 from django.conf import settings
 
 from shop.models import Item
@@ -18,7 +17,7 @@ class Cart(object):
                                   'price': item.price}
             self.save()
 
-    def updateItemQuantity(self, item, quantity):
+    def update_quantity(self, item, quantity):
         if item.id in self.cart:
             self.cart[item.id]['quantity'] = quantity
 

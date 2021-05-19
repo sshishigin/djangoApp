@@ -11,12 +11,12 @@ from shop.serializers import ItemsSerializer
 class ItemApiTestCase(APITestCase):
     def test_get(self):
         category = Category.objects.create(company='testCaseCompany', in_box=True)
-        book_1 = Item.objects.create(title='testCaseItem1', price=1111, category=category)
-        book_2 = Item.objects.create(title='testCaseItem2', price=2222, category=category)
+        item1 = Item.objects.create(title='testCaseItem1', price=1111, category=category)
+        item2 = Item.objects.create(title='testCaseItem2', price=2222, category=category)
         url = reverse('item-list')
         print(url)
         response = self.client.get(url)
-        serializer_data = ItemsSerializer([book_1, book_2], many=True).data
+        serializer_data = ItemsSerializer([item1, item2], many=True).data
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(serializer_data, response.data)
 

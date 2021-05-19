@@ -35,7 +35,7 @@ class CartAPI(APIView):
 
     def patch(self, request):
         if request.data['quantity'] and request.data['itemId']:
-            Cart.updateItemQuantity(
+            Cart.update_quantity(
                 item=get_object_or_404(Item, id=request.data['itemId']),
                 quantity=request.data['quantity']
             )
