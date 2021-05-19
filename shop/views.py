@@ -1,10 +1,9 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from rest_framework.filters import OrderingFilter, SearchFilter
-from rest_framework.mixins import UpdateModelMixin
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.viewsets import ModelViewSet, GenericViewSet
+from rest_framework.viewsets import ModelViewSet, GenericViewSet, ReadOnlyModelViewSet
 from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import Item, UserItemRelation
@@ -19,7 +18,7 @@ def item_page(request, item_id):
     return render(request, 'shop/item_page.html', {'item_id': item_id})
 
 
-class ItemsViewSet(ModelViewSet):
+class ItemsViewSet(ReadOnlyModelViewSet):
     queryset = Item.objects.all()
     serializer_class = ItemsSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
@@ -29,7 +28,7 @@ class ItemsViewSet(ModelViewSet):
 
 
 class LikeAPI(APIView):
-
+    permission_classes = [IsAuthenticated]
     def get(self, request):
         serializer = UserItemRelationSerializer(
             UserItemRelation.objects.filter(user=request.user, like=True),
@@ -40,6 +39,6 @@ class LikeAPI(APIView):
     def post(self, request):
         relation, _ = UserItemRelation.objects\
             .get_or_create(user=request.user, item_id=request.data['itemId'])
-        relation.like=request.data['like']
+        relation.like = request.data['like']
         relation.save()
         return Response('Liked', status=200)
