@@ -14,7 +14,16 @@
             <p class="card-text">
                 {{ item.description }}
                 <h2> {{ item.price }} <strong>рублей</strong></h2>
-                {{ blabla }}
+                <input id='input_quantity' type="text" :value="quantityToAdd"
+                    @keyup.enter="setItemQuantity($event.target.value)"
+                    v-on:blur="setItemQuantity($event.target.value)"
+                >
+        
+                <br>
+                <button type="button" class="btn btn-primary" @click='addItem'>+</button>
+                <button type="button" class="btn btn-primary" @click='removeItem'>-</button>
+                <br>
+                <button type="button" class="btn btn-primary" @click='addToCart'>Добавить {{quantityToAdd}} шт. в корзину</button>
             </p>
         </div>
     </div>
