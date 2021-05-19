@@ -6,6 +6,8 @@ from shop.models import Item
 from .models import Cart
 
 # 'api/cart'
+
+
 class CartAPI(APIView):
 
     def get(self, request):
@@ -21,7 +23,8 @@ class CartAPI(APIView):
         except KeyError:
             return Response('Bad request, itemId & quantity required')
 
-    def delete(self, request):
+    def put(self, request):
+        print(request.data)
         if request.data['itemIdList']:
             item_id_list = request.data['itemIdList']
             for item_id in item_id_list:

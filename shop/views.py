@@ -29,6 +29,7 @@ class ItemsViewSet(ReadOnlyModelViewSet):
 
 class LikeAPI(APIView):
     permission_classes = [IsAuthenticated]
+
     def get(self, request):
         serializer = UserItemRelationSerializer(
             UserItemRelation.objects.filter(user=request.user, like=True),

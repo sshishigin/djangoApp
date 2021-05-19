@@ -9,7 +9,7 @@ const app = Vue.createApp({
             axios.patch('/api/cart/', {clearCart: true})
         },
         remove(id) {
-            axios.patch('/api/cart/', {item_id:id, 'clearCart': false});
+            axios.put('/api/cart/', {itemIdList: [id], 'clearCart': false});
             this.items[id]['removed'] = true;
         }
     },
