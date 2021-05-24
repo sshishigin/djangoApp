@@ -9,9 +9,12 @@ from .models import Cart
 
 
 class CartAPI(APIView):
-
     def get(self, request):
-        return Response(Cart(request), status=200)
+        try:
+            return Response(Cart(request), status=200)
+        except Error as e:
+            print(e)
+            return Response('BadRequest', status=500)
 
     def post(self, request):
         try:

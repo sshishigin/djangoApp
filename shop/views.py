@@ -25,6 +25,7 @@ class ItemsViewSet(ReadOnlyModelViewSet):
     filter_fields = ['id', 'price', 'available']
     search_fields = ['title', 'description']
     ordering_fields = ['price']
+    # pagination_class = ...
 
 
 class LikeAPI(APIView):
