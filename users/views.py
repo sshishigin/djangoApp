@@ -24,11 +24,7 @@ def register(request):
 
 
 def show_profile(request):
-    return render(request, 'profile/user_profile.html', {
-        'user_profile': CustomUser.objects.get(id=request.user.id),
-        'orders': Order.objects.filter(user=request.user)
-    }
-                  )
+    return render(request, 'profile/user_profile.html')
 
 
 def logout_(request):

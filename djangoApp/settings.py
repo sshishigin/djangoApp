@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'cart',
     'orders',
     
-    'rest_framework'
+    'rest_framework',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -55,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'djangoApp.urls'
@@ -150,7 +152,7 @@ STATICFILES_DIRS = [
 ]
 
 # Email backend
-#спрятал настройки
+
 
 # REST SETTINGS
 
@@ -164,3 +166,12 @@ REST_FRAMEWORK = {
 }
 
 CSRF_COOKIE_NAME = "XSRF-TOKEN"
+
+# PyMemcache settings
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
+
