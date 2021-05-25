@@ -8,7 +8,6 @@ from orders.views import OrderAPI, OrderItemViewSet
 from shop.views import ItemsViewSet, LikeAPI
 from users.views import UsersViewSet
 import debug_toolbar
-from django.conf import settings
 
 
 router = DefaultRouter()
