@@ -6,13 +6,13 @@ from cart.views import CartAPI
 from djangoApp.routers import DefaultRouterWithSimpleViews
 from orders.views import OrderAPI, OrderItemViewSet
 from shop.views import ItemsViewSet, LikeAPI
-from users.views import UsersViewSet
+from users.views import UserViewSet
 import debug_toolbar
 
 
 router = DefaultRouter()
 router.register('api/items', ItemsViewSet)
-router.register('api/users', UsersViewSet)
+router.register('api/users', UserViewSet)
 router.register('api/orderItems', OrderItemViewSet)
 
 extra_router = DefaultRouterWithSimpleViews()

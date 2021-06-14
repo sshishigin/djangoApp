@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'orders',
     
     'rest_framework',
+    'rest_framework.authtoken',
     'debug_toolbar',
 ]
 
@@ -162,7 +163,10 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PARSER_CLASSES': (
         'rest_framework.parsers.JSONParser',
-    )
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication'
+    ]
 }
 
 CSRF_COOKIE_NAME = "XSRF-TOKEN"
