@@ -1,40 +1,30 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import login, logout
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.filters import SearchFilter, OrderingFilter
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from django.shortcuts import render
+from rest_framework.permissions import IsAdminUser, AllowAny
 from rest_framework.viewsets import ModelViewSet
 
 from .models import CustomUser
-from .forms import CustomUserCreationForm
-from orders.models import Order
-from .serializers import UsersSerializer
-
-
-def register(request):
-    if request.method != 'POST':
-        form = CustomUserCreationForm()
-    else:
-        form = CustomUserCreationForm(data=request.POST)
-        if form.is_valid():
-            new_user = form.save()
-            login(request, new_user)
-            return redirect("shop:index")
-    return render(request, 'registration/register.html', {'form': form})
+from .permissions import IsOwner
+from .serializers import ReadOnlyUserSerializer, WriteOnlyUserSerializer, UserRegistrationSerializer
 
 
 def show_profile(request):
     return render(request, 'profile/user_profile.html')
 
 
-def logout_(request):
-    logout(request)
-    return redirect("shop:index")
-
-
-class UsersViewSet(ModelViewSet):
+class UserViewSet(ModelViewSet):
     queryset = CustomUser.objects.all()
-    permission_classes = [IsAuthenticated, IsAdminUser]
-    serializer_class = UsersSerializer
-    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
 
+    def get_serializer_class(self):
+        if self.action in ['list', 'retrieve']:
+            return ReadOnlyUserSerializer
+        if self.action == 'create':
+            return UserRegistrationSerializer
+        return WriteOnlyUserSerializer
+
+    def get_permissions(self):
+        if self.action in ['update', 'partial_update']:
+            return [IsOwner()]
+        if self.action in ['list', 'destroy']:
+            return [IsAdminUser()]
+        else:
+            return [AllowAny()]
