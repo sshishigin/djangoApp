@@ -46,10 +46,14 @@ INSTALLED_APPS = [
     
     'rest_framework',
     'rest_framework.authtoken',
+    'corsheaders',
+
+
     'debug_toolbar',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -58,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'djangoApp.urls'
@@ -181,3 +186,13 @@ CACHES = {
 
 # for debug toolbar
 INTERNAL_IPS = ('127.0.0.1',)
+
+
+# CORS set up
+
+CORS_ORIGIN_ALLOW_ALL = True # If this is used then `CORS_ORIGIN_WHITELIST` will not have any effect
+CORS_ALLOW_CREDENTIALS = True
+
+# Redis settings
+REDIS_HOST = 'localhost'
+REDIS_PORT = 6379
