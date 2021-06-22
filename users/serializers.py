@@ -7,14 +7,14 @@ class ReadOnlyUserSerializer(ModelSerializer):
     # Serializer для чтения данных юзера
     class Meta:
         model = CustomUser
-        fields = ['id', 'email', 'username', 'first_name', 'last_name', 'is_active', 'last_login', 'is_superuser']
+        fields = ['id', 'email', 'is_active', 'last_login', 'is_superuser', 'first_name', 'last_name']
 
 
 class UserRegistrationSerializer(ModelSerializer):
     # Serializer для регистрации юзера
     class Meta:
         model = CustomUser
-        fields = ['email', "password", 'first_name', 'last_name', 'is_active', 'last_login', 'is_superuser']
+        fields = ['email', "password", 'is_active', 'last_login', 'is_superuser', 'first_name', 'last_name']
 
     def create(self, validated_data):
         user = CustomUser(
@@ -29,6 +29,6 @@ class WriteOnlyUserSerializer(ModelSerializer):
     # Serializer для обновления
     class Meta:
         model = CustomUser
-        fields = ['email', 'first_name', 'last_name']
+        fields = ['email', 'first_name', 'last_name', 'first_name', 'last_name']
 
 
