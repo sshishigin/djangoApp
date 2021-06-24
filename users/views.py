@@ -1,3 +1,4 @@
+from django.contrib.auth import authenticate
 from django.shortcuts import render
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import obtain_auth_token, ObtainAuthToken
@@ -6,7 +7,7 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from .models import CustomUser
+from .models import User
 from .permissions import IsOwner
 from .serializers import ReadOnlyUserSerializer, WriteOnlyUserSerializer, UserRegistrationSerializer
 
@@ -20,13 +21,13 @@ class CustomTokenObtain(ObtainAuthToken):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
-        response_user = JSONRenderer().render(ReadOnlyUserSerializer(CustomUser.objects.get_by_natural_key(user)).data)
+        response_user = JSONRenderer().render(ReadOnlyUserSerializer(User.objects.get_by_natural_key(user)).data)
         token, created = Token.objects.get_or_create(user=user)
         return Response({'token': token.key, 'user': response_user})
 
 
 class UserViewSet(ModelViewSet):
-    queryset = CustomUser.objects.all()
+    queryset = User.objects.all()
 
     def get_serializer_class(self):
         if self.action in ['list', 'retrieve']:
