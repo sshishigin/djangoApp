@@ -2,7 +2,7 @@ from json import JSONEncoder
 
 from django.db import models
 from shop.models import Item
-from users.models import CustomUser
+from users.models import User
 
 
 class Order(models.Model):
@@ -15,7 +15,7 @@ class Order(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)
-    user = models.ForeignKey(CustomUser, default=1, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, default=1, on_delete=models.CASCADE)
 
     class Meta:
         ordering = ('-created',)

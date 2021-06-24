@@ -1,9 +1,11 @@
-from django.shortcuts import render, get_object_or_404
+from audioop import error
+
+from django.shortcuts import render
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
-from shop.models import Item
 from .models import Cart
+
 
 # 'api/cart'
 
@@ -11,38 +13,37 @@ from .models import Cart
 class CartAPI(APIView):
     def get(self, request):
         try:
-            return Response(Cart(request), status=200)
-        except Error as e:
+            return Response(Cart(request), status.HTTP_200_OK)
+        except error as e:
             print(e)
             return Response('BadRequest', status=500)
 
     def post(self, request):
         try:
-            Cart(request).add(
-                item=get_object_or_404(Item, id=request.data['itemId']),
+            Cart(request).add_item(
+                item_id=request.data['itemId'],
                 quantity=request.data['quantity'],
             )
-            return Response(status=202)
+            return Response(status.HTTP_202_ACCEPTED)
         except KeyError:
             return Response('Bad request, itemId & quantity required')
 
     def put(self, request):
-        print(request.data)
         if request.data['itemIdList']:
             item_id_list = request.data['itemIdList']
             for item_id in item_id_list:
-                Cart(request).remove(get_object_or_404(Item, id=item_id))
-            return Response("Item(s) deleted", status=200)
+                Cart(request).remove_item(item_id)
+            return Response("Item(s) deleted", status.HTTP_202_ACCEPTED)
         else:
             return Response('Bad request, проверьте id')
 
     def patch(self, request):
         if request.data['quantity'] and request.data['itemId']:
             Cart.update_quantity(
-                item=get_object_or_404(Item, id=request.data['itemId']),
+                item_id=request.data['itemId'],
                 quantity=request.data['quantity']
             )
-            return Response('Quantity updated', status=200)
+            return Response('Quantity updated', status.HTTP_200_OK)
         else:
             return Response('Bad request(quantity or itemId is missing', status=204)
 

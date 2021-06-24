@@ -46,10 +46,14 @@ INSTALLED_APPS = [
     
     'rest_framework',
     'rest_framework.authtoken',
+    'corsheaders',
+
+
     'debug_toolbar',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -90,16 +94,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'mydatabase',
-#         'USER': 'mydatabaseuser',
-#         'PASSWORD': 'mypassword',
-#         'HOST': '127.0.0.1',
-#         'PORT': '5432',
-#     }
-# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -144,7 +138,7 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'users.CustomUser'
+AUTH_USER_MODEL = 'users.User'
 
 CART_SESSION_ID = 'cart'
 
@@ -171,13 +165,27 @@ REST_FRAMEWORK = {
 
 CSRF_COOKIE_NAME = "XSRF-TOKEN"
 
-# PyMemcache settings
+# for debug toolbar
+INTERNAL_IPS = ('127.0.0.1',)
+
+
+# CORS set up
+
+CORS_ORIGIN_ALLOW_ALL = True # If this is used then `CORS_ORIGIN_WHITELIST` will not have any effect
+CORS_ALLOW_CREDENTIALS = True
+
+# Cache settings (via Redis)
+
+REDIS_HOST = '127.0.0.1'
+REDIS_PORT = 6379
 CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
-        'LOCATION': '127.0.0.1:11211',
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": f"redis://{REDIS_HOST}:{REDIS_PORT}",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient"
+        },
     }
 }
 
-# for debug toolbar
-INTERNAL_IPS = ('127.0.0.1',)
+CACHE_TTL = 60 * 15
