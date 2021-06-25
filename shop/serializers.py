@@ -2,10 +2,16 @@ from rest_framework.serializers import HyperlinkedModelSerializer, ModelSerializ
 from shop.models import Item, UserItemRelation
 
 
-class ItemsSerializer(HyperlinkedModelSerializer):
+class ItemSerializer(HyperlinkedModelSerializer):
     class Meta:
         model = Item
         fields = ['id', 'title', 'price', 'description', 'pic', 'available']
+
+
+class CartItemSerializer(HyperlinkedModelSerializer):
+    class Meta:
+        model = Item
+        fields = ['id', 'title', 'price', 'pic']
 
 
 class UserItemRelationSerializer(ModelSerializer):
