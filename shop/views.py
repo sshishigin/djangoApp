@@ -11,7 +11,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from djangoApp import settings
 from .models import Item, UserItemRelation
-from shop.serializers import ItemsSerializer, UserItemRelationSerializer
+from shop.serializers import ItemSerializer, UserItemRelationSerializer
 
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
@@ -26,13 +26,13 @@ def item_page(request, item_id):
 
 class ItemsViewSet(ReadOnlyModelViewSet):
     queryset = Item.objects.all()
-    serializer_class = ItemsSerializer
+    serializer_class = ItemSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filter_fields = ['id', 'price', 'available']
     search_fields = ['title', 'description']
     ordering_fields = ['price']
 
-    @method_decorator(cache_page(CACHE_TTL))
+    # @method_decorator(cache_page(CACHE_TTL))
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
