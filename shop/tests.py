@@ -5,7 +5,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from shop.models import Item, Category
-from shop.serializers import ItemsSerializer
+from shop.serializers import ItemSerializer
 
 
 class ItemApiTestCase(APITestCase):
@@ -16,7 +16,7 @@ class ItemApiTestCase(APITestCase):
         url = reverse('item-list')
         print(url)
         response = self.client.get(url)
-        serializer_data = ItemsSerializer([item1, item2], many=True).data
+        serializer_data = ItemSerializer([item1, item2], many=True).data
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(serializer_data, response.data)
 
@@ -26,7 +26,7 @@ class ItemsSerializerTestCase(TestCase):
         category = Category.objects.create(company='testCaseCompany', in_box=True)
         book_1 = Item.objects.create(title='testCaseItem1', price=1111, category=category)
         book_2 = Item.objects.create(title='testCaseItem2', price=2222, category=category)
-        data = ItemsSerializer([book_1, book_2], many=True).data
+        data = ItemSerializer([book_1, book_2], many=True).data
         expected = [
             {
                 'id': book_1.id,
