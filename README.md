@@ -1,6 +1,6 @@
 # djangoApp
 
-Set up for production:
+Set up for dev:
 
 git clone sshishigin/djangoApp
 python3 -m venv env
