@@ -16,7 +16,7 @@ class CartAPI(APIView):
             return Response(Cart(request), status.HTTP_200_OK)
         except error as e:
             print(e)
-            return Response('BadRequest', status=500)
+            return Response('BadRequest', status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def post(self, request):
         try:
@@ -46,11 +46,6 @@ class CartAPI(APIView):
             return Response('Quantity updated', status.HTTP_200_OK)
         else:
             return Response('Bad request(quantity or itemId is missing', status=204)
-
-
-
-
-
 
 
 
