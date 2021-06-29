@@ -1,6 +1,7 @@
 import redis
 
 from django.conf import settings
+from django.contrib.auth.models import AnonymousUser
 from rest_framework.generics import get_object_or_404
 
 from shop.models import Item
@@ -12,21 +13,25 @@ class Cart(object):
         self.client = redis.Redis(host=settings.REDIS_HOST,
                                   port=settings.REDIS_PORT,
                                   db=0)
-        self.user = request.user.get_username()
-        cart = self.client.hgetall(f'cart:{self.user}')
-        self.cart = cart
+        self.user_id = request.user
+        if self.user_id != AnonymousUser:
+            cart = self.client.hgetall(f'cart:{self.user_id}')
+            if cart:
+                self.cart = cart
+            else:
+                self.cart = {}
 
-    def add_item(self, item_id, quantity):
-        self.client.hsetnx(f'cart:{self.user}', item_id, quantity)
+    def add_item(self, item_id: int, quantity: int):
+        self.client.hsetnx(f'cart:{self.user_id}', item_id, quantity)
 
-    def remove_item(self, item_id):
-        self.client.hdel(f'cart:{self.user}', item_id)
+    def remove_item(self, item_id: int):
+        self.client.hdel(f'cart:{self.user_id}', item_id)
 
     def clear(self):
-        self.client.delete(f'cart:{self.user}')
+        self.client.delete(f'cart:{self.user_id}')
 
-    def update_quantity(self, item_id, quantity):
-        self.client.hincrby(f'cart:{self.user}', item_id, quantity)
+    def update_quantity(self, item_id: int, quantity: int):
+        self.client.hincrby(f'cart:{self.user_id}', item_id, quantity)
 
     def __iter__(self):
         for key, value in self.cart.items():
