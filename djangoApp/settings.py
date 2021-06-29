@@ -171,7 +171,7 @@ INTERNAL_IPS = ('127.0.0.1',)
 
 # CORS set up
 
-CORS_ORIGIN_ALLOW_ALL = True # If this is used then `CORS_ORIGIN_WHITELIST` will not have any effect
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
 # Cache settings (via Redis)
