@@ -2,6 +2,7 @@ import redis
 
 from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
+from django.http import Http404
 from rest_framework.generics import get_object_or_404
 
 from shop.models import Item
@@ -34,7 +35,11 @@ class Cart(object):
         self.client.hincrby(f'cart:{self.user_id}', item_id, quantity)
 
     def __iter__(self):
-        for key, value in self.cart.items():
-            item_in_cart = CartItemSerializer(get_object_or_404(Item, id=key)).data
-            item_in_cart['quantity'] = value
+        for id, quantity in self.cart.items():
+            try:
+                item_in_cart = CartItemSerializer(get_object_or_404(Item, id=id)).data
+            except Http404:
+                self.client.hdel(f'cart:{self.user_id}', id)
+                continue
+            item_in_cart['quantity'] = quantity
             yield item_in_cart
