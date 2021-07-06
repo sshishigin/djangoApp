@@ -24,19 +24,16 @@ class Item(models.Model):
     price = models.BigIntegerField(default=0)
     retail_price = models.BigIntegerField(default=999999)
     description = models.TextField(max_length=10000)
-    pic = models.CharField(max_length=100, default='https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.dribbble.com%2Fusers%2F448879%2Fscreenshots%2F2487655%2Faguacate.jpg&f=1&nofb=1')
+    pic = models.CharField(max_length=130, default='https://images.pexels.com/photos/1666067/pexels-photo-1666067.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260')
     available = models.BooleanField(default=False)
     users = models.ManyToManyField(User, through='UserItemRelation')
-
-    def str_id(self):
-        return str(self.id)
 
     class Meta:
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
 
     def __str__(self):
-        return str(self.id)+':' + self.title
+        return f"{self.title} (Id:{self.id})"
 
     def to_dict(self):
         return {'id': self.id, 'title': self.title, 'price': self.price, 'pic': self.pic}
