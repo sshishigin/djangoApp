@@ -1,0 +1,14 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=djangodb
+      - POSTGRES_USER=stepan
+      - POSTGRES_PASSWORD=efomef62
+    ports:
+      - "5432:5432"
+  redis:
+    image: redis
+    ports:
+       - "6379:6379"
