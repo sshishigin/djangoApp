@@ -1,5 +1,3 @@
-from django.core.cache.backends.base import DEFAULT_TIMEOUT
-from django.shortcuts import render
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.permissions import IsAuthenticated
@@ -7,19 +5,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
-from djangoApp import settings
 from shop.serializers import ItemSerializer, UserItemRelationSerializer
 from .models import Item, UserItemRelation
-
-CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
-
-
-def index(request):
-    return render(request, 'shop/index.html')
-
-
-def item_page(request, item_id):
-    return render(request, 'shop/item_page.html', {'item_id': item_id})
 
 
 class ItemsViewSet(ReadOnlyModelViewSet):
@@ -30,7 +17,6 @@ class ItemsViewSet(ReadOnlyModelViewSet):
     search_fields = ['title', 'description']
     ordering_fields = ['price']
 
-    # @method_decorator(cache_page(CACHE_TTL))
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
