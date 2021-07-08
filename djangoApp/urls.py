@@ -1,7 +1,5 @@
-import debug_toolbar
 from django.contrib import admin
-from django.urls import path, include
-from django.views.generic import TemplateView
+from django.urls import path
 from rest_framework.routers import DefaultRouter
 
 from cart.views import CartAPI
@@ -21,17 +19,8 @@ extra_router.register('api/order', OrderAPI, 'orderAPI')
 extra_router.register('api/like', LikeAPI, 'likeAPI')
 
 urlpatterns = [
-    path('__debug__/', include(debug_toolbar.urls)),
     path('admin/', admin.site.urls),
-    path('', include('shop.urls', namespace='shop')),
-    path('cart/', include('cart.urls', namespace='cart')),
-    path('users/', include('users.urls', namespace='user')),
-    path('order/', include('orders.urls', namespace='orders')),
     path('api/login', CustomTokenObtain.as_view(), name='auth-token'),
-    path('swagger-ui/', TemplateView.as_view(
-        template_name='api_documentation/swagger-ui.html',
-        extra_context={'schema_url': 'openapi-schema'}
-    ), name='swagger-ui'),
 ]
 
 urlpatterns += router.urls

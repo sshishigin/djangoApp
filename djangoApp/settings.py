@@ -160,9 +160,6 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-# Email backend
-
-
 # REST SETTINGS
 
 REST_FRAMEWORK = {

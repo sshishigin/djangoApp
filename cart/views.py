@@ -1,14 +1,10 @@
 from audioop import error
 
-from django.shortcuts import render
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import Cart
-
-
-# 'api/cart'
 
 
 class CartAPI(APIView):
@@ -50,8 +46,3 @@ class CartAPI(APIView):
     def delete(self, request):
         Cart(request).clear()
         return Response("Cart cleared", status.HTTP_204_NO_CONTENT)
-
-
-
-def cart_detail(request):
-    return render(request, 'cart/cartDetail.html')

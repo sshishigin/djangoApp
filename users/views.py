@@ -1,5 +1,3 @@
-from django.shortcuts import render
-from django.shortcuts import render
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.permissions import IsAdminUser, AllowAny
@@ -10,10 +8,6 @@ from rest_framework.viewsets import ModelViewSet
 from .models import User
 from .permissions import IsOwner
 from .serializers import ReadOnlyUserSerializer, WriteOnlyUserSerializer, UserRegistrationSerializer
-
-
-def show_profile(request):
-    return render(request, 'profile/user_profile.html')
 
 
 class CustomTokenObtain(ObtainAuthToken):
