@@ -19,7 +19,7 @@ extra_router.register('api/order', OrderAPI, 'orderAPI')
 extra_router.register('api/like', LikeAPI, 'likeAPI')
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('', admin.site.urls),
     path('api/login', CustomTokenObtain.as_view(), name='auth-token'),
 ]
 
