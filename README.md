@@ -1,13 +1,18 @@
 # djangoApp
 
-Set up for dev:
+Чтобы запустить весь бэк в докере нужно:
 
-git clone sshishigin/djangoApp
-python3 -m venv env
-source env/bin/activate
-pip install -r requirements.txt
-python3 manage.py migrate
+git clone https://github.com/sshishigin/djangoApp master
 
-Additional dependencies:
+Далее в корне проекта:
 
-Redis
+docker-compose build & docker-compose up
+
+
+Вроде все
+
+Для этого тебе понадобиться установить docker и docker-compose, как это сделать можно найти по первой ссылке в гугле
+
+api будет доступно по адресу 128.0.0.1:7000 ( в последней версии front проекта все настройки уже выставлены, обновись)
+
+Возможно у тебя другой локальный адрес, тогда тебе его надо узнать и прописать в файле scr/api/instance.js в параметрах axios
