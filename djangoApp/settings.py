@@ -15,13 +15,15 @@ from pathlib import Path
 
 import environ
 
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+environ.Env.read_env(env_file=f"{BASE_DIR}/.env")
+
 env = environ.Env(
     # set casting, default value
     DEBUG=(bool, False)
 )
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -32,7 +34,7 @@ SECRET_KEY = 'django-insecure-*ra^08$q0e*(b-uu_qjkc!f#e9@)0ibj5sfp-+=cvw%vn49@=f
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -102,7 +104,7 @@ DATABASES = {
         'NAME': env('POSTGRES_DB'),
         'USER': env('POSTGRES_USER'),
         'PASSWORD': env('POSTGRES_PASSWORD'),
-        'HOST': env('DATABASE_HOST'),
+        'HOST': 'db',
         'PORT': env('DATABASE_PORT'),
     }
 }
@@ -186,7 +188,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 # Cache settings (via Redis)
 
-REDIS_HOST = '127.0.0.1'
+REDIS_HOST = 'redis'
 REDIS_PORT = 6379
 CACHES = {
     "default": {
