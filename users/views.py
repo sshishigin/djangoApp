@@ -1,7 +1,7 @@
-from django.contrib.auth import authenticate
+from django.shortcuts import render
 from django.shortcuts import render
 from rest_framework.authtoken.models import Token
-from rest_framework.authtoken.views import obtain_auth_token, ObtainAuthToken
+from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.permissions import IsAdminUser, AllowAny
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response

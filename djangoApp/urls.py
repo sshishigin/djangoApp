@@ -1,3 +1,4 @@
+import debug_toolbar
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
@@ -8,8 +9,6 @@ from djangoApp.routers import DefaultRouterWithSimpleViews
 from orders.views import OrderAPI, OrderItemViewSet
 from shop.views import ItemsViewSet, LikeAPI
 from users.views import UserViewSet, CustomTokenObtain
-import debug_toolbar
-
 
 router = DefaultRouter()
 router.register('api/items', ItemsViewSet)

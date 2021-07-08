@@ -1,0 +1,29 @@
+version: '3.7'
+
+volumes:
+  data:
+  backup:
+  node_modules:
+  rabbitmq:
+  static_files:
+
+services:
+  db:
+    image: postgres:latest
+    restart: always
+    env_file:
+      - .env
+  web:
+    build: .
+    command: bash -c "python /code/manage.py runserver 0.0.0.0:7000"
+    volumes:
+      - .:/code
+    container_name: myDjango
+    ports:
+      - "7000:7000"
+    depends_on:
+      - "db"
+    environment:
+      DJANGO_SETTINGS_MODULE: 'djangoApp.settings'
+  redis:
+    image: redis

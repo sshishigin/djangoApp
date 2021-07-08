@@ -1,6 +1,5 @@
-from json import JSONEncoder
-
 from django.db import models
+
 from shop.models import Item
 from users.models import User
 
