@@ -6,7 +6,11 @@ git clone https://github.com/sshishigin/djangoApp master
 
 Далее в корне проекта:
 
-docker-compose build & docker-compose up
+docker-compose build  (только в первый раз)
+
+Чтобы запустить контейнеры(по сути Django/redis/postegre):
+
+docker-compose up 
 
 
 Вроде все
